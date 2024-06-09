@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        .product-details {
+            display: flex;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .product-details>.left {
+            float: left;
+            width: 35%;
+            height: 35%;
+        }
+
+        .product-details>.right {
+            float: right;
+            width: 50%;
+            height: 35%;
+            margin: 1rem;
+        }
+
+        .amount {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .btn_cart {
+            border: 1px solid;
+            width: fit-content;
+            display: flex;
+            height: 30px;
+        }
+
+        #up,
+        #num,
+        #down {
+            text-align: center;
+            width: 30px;
+            background: transparent;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+
+    </header>
+
+    <main>
+        <div class="product-details">
+            <img class="left" id="productImage" src="" alt="Product Image">
+            <div class="right">
+                <br>
+                <h2 id="productName"></h2>
+                <br>
+                <p id="productPrice"></p>
+                <br>
+                <p id="productDescription"></p>
+                <br>
+                <div class="amount">
+                    <div class="btn_cart">
+                        <input type="button" id="down" value="-"></input>
+                        <input type="text" id="num" value="0"></input>
+                        <input type="button" id="up" value="+"></input>
+                        <button type="button" class="btn btn-primary" style="margin-top: 2rem;">購買</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const productName = urlParams.get('name');
+        const productDescription = urlParams.get('description');
+        const productPrice = urlParams.get('price');
+        const productImage = urlParams.get('img');
+
+        document.getElementById('productName').innerText = productName;
+        document.getElementById('productDescription').innerText = productDescription;
+        document.getElementById('productPrice').innerText = '售價：NT$' + productPrice;
+        document.getElementById('productImage').src = './images/' + productImage;
+
+        window.onload = async function () {
+            addListener();
+            setItem(itemObj[urlParams.get('id')]);
+        }
+
+        function addListener() {
+            let num = document.getElementById("num");
+            document.getElementById("up").addEventListener("click", function () {
+                num.value = parseInt(num.value) + 1;
+            });
+            document.getElementById("down").addEventListener("click", function () {
+                if (num.value <= 0) {
+                    num.value = 0;
+                } else {
+                    num.value = parseInt(num.value) - 1;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
